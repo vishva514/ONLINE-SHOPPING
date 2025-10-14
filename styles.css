@@ -1,4 +1,4 @@
-/* ====== GLOBAL STYLES ====== */
+
 * {
   box-sizing: border-box;
   transition: all 0.2s ease-in-out;
@@ -15,7 +15,7 @@ body {
   align-items: center;
 }
 
-/* ====== LOGIN BOX ====== */
+
 .login-box {
   background-color: #ffffff;
   padding: 40px 30px;
@@ -34,7 +34,7 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* ====== GOOGLE LOGIN BUTTON ====== */
+
 .google-btn {
   display: flex;
   align-items: center;
@@ -62,7 +62,7 @@ body {
   margin-right: 10px;
 }
 
-/* ====== USER INFO ====== */
+
 #userInfo {
   background-color: #fff;
   padding: 15px;
@@ -72,7 +72,7 @@ body {
   text-align: center;
 }
 
-/* ====== LOGOUT BUTTON ====== */
+
 #logoutBtn {
   background: linear-gradient(135deg, #ff4d4f, #ff7875);
   color: #fff;
@@ -88,7 +88,6 @@ body {
   background: linear-gradient(135deg, #d9363e, #f5222d);
 }
 
-/* ====== ADMIN FORM ====== */
 #adminFormContainer {
   background-color: #ffffff;
   padding: 25px;
@@ -130,7 +129,6 @@ body {
   background: linear-gradient(135deg, #096dd9, #1890ff);
 }
 
-/* ====== PRODUCT GRID ====== */
 #productsContainer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -140,7 +138,6 @@ body {
   margin-bottom: 50px;
 }
 
-/* ====== PRODUCT BOX ====== */
 .product-box {
   background-color: #ffffff;
   padding: 20px;
@@ -169,7 +166,7 @@ body {
   line-height: 1.5;
 }
 
-/* ====== PRODUCT BUTTONS ====== */
+
 .product-box button {
   margin-top: 12px;
   padding: 10px 14px;
@@ -194,7 +191,7 @@ body {
   opacity: 0.95;
 }
 
-/* ====== QUANTITY CONTROL ====== */
+
 .quantity-control {
   display: flex;
   align-items: center;
@@ -221,7 +218,7 @@ body {
   background: linear-gradient(135deg, #52c41a, #73d13d);
 }
 
-/* ====== ANIMATIONS ====== */
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
