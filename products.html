@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Products</title>
+ <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h2>Welcome to Products Page</h2>
+  <div id="userInfo"></div>
+  <button id="logoutBtn">Logout</button>
+  <hr />
+<button id="showAdminFormBtn" style="display:none; margin-bottom: 15px;">Add Product</button>
+
+<input type="text" id="searchInput" placeholder="Search products..." style="width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 6px; border: 1px solid #ccc;">
+
+  <div id="adminFormContainer" style="display: none; margin-top: 20px;">
+  <h3>Add New Product</h3>
+  <form id="adminProductForm">
+    <input type="text" id="productName" placeholder="Product Name" required /><br><br>
+    <textarea id="productDescription" placeholder="Description" required></textarea><br><br>
+    <input type="number" id="productPrice" placeholder="Price" required /><br><br>
+    <input type="number" id="productQuantity" placeholder="Quantity" required /><br><br>
+    <button type="submit">Add Product</button>
+  </form>
+</div>
+
+  <h3>Available Products</h3>
+<div id="productsContainer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   <script src="Config.js"></script>
+  <script src="authen.js"></script>
+ <script src="products.js">
+
+</script>
+
+</body>
+</html>
