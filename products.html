@@ -14,6 +14,7 @@
     </div>
       <button id="logoutBtn">Logout</button>
       <button id="cartBtn" style="margin-left: 15px;">Cart (<span id="cartCount">0</span>)</button>
+      <button id="viewOrdersBtn">View Orders</button>
     </div>
   </header>
   
@@ -37,7 +38,6 @@
 
   <h3>Available Products</h3>
 <div id="productsContainer"></div>
-
 <div id="cartModal" class="cart-modal">
   <div class="cart-modal-content">
     <span class="closeCart">&times;</span>
@@ -57,6 +57,13 @@
       </div>
       <button id="placeOrderBtn" class="place-order-btn">Place Order</button>
     </div>
+  </div>
+</div>
+<div id="ordersModal" class="orders-modal">
+  <div class="orders-modal-content">
+    <span class="closeOrders">&times;</span>
+    <h3>Your Orders</h3>
+    <div id="ordersContainer"></div>
   </div>
 </div>
 

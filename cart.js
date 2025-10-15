@@ -7,6 +7,11 @@ const paymentSection = document.getElementById("paymentSection");
 const paymentMethod = document.getElementById("paymentMethod");
 const placeOrderBtn = document.getElementById("placeOrderBtn");
 const totalPriceElem = document.getElementById("totalPrice");
+const viewOrdersBtn = document.getElementById("viewOrdersBtn");
+const ordersModal = document.getElementById("ordersModal");
+const closeOrders = document.querySelector(".closeOrders");
+const ordersContainer = document.getElementById("ordersContainer");
+
 
 cartBtn.addEventListener("click", async () => {
   await renderCart();
@@ -21,6 +26,24 @@ closeCart.addEventListener("click", () => {
 // Close modal on outside click
 window.addEventListener("click", (e) => {
   if (e.target == cartModal) cartModal.style.display = "none";
+});
+
+// Open Orders Modal
+viewOrdersBtn.addEventListener("click", async () => {
+  await fetchOrders();
+  ordersModal.style.display = "block";
+});
+
+// Close Orders Modal
+closeOrders.addEventListener("click", () => {
+  ordersModal.style.display = "none";
+});
+
+// Close modal on outside click
+window.addEventListener("click", (e) => {
+  if (e.target === ordersModal) {
+    ordersModal.style.display = "none";
+  }
 });
 
 async function renderCart() {
@@ -196,3 +219,57 @@ function showPopup(message) {
     popup.classList.remove("show");
   }, 3000);
 }
+// Fetch user orders from Firestore
+async function fetchOrders() {
+  ordersContainer.innerHTML = "<p>Loading your orders...</p>";
+
+  try {
+    const res = await axios.get(
+      "https://firestore.googleapis.com/v1/projects/online-shop-dcd05/databases/(default)/documents/orders",
+      { headers: { Authorization: `Bearer ${idToken}` } }
+    );
+
+    const allOrders = res.data.documents || [];
+    const userOrders = allOrders.filter(
+      (doc) => doc.fields?.userEmail?.stringValue === email
+    );
+
+    if (userOrders.length === 0) {
+      ordersContainer.innerHTML = "<p>You have no orders yet.</p>";
+      return;
+    }
+
+    ordersContainer.innerHTML = "";
+    userOrders.forEach((orderDoc) => {
+      const order = orderDoc.fields;
+      const orderDate = new Date(order.orderDate.stringValue).toLocaleString();
+      const payment = order.paymentMethod.stringValue;
+
+      const orderProducts =
+        order.products?.arrayValue?.values?.map(
+          (p) => p.mapValue.fields.name.stringValue
+        ) || [];
+
+      const orderDiv = document.createElement("div");
+      orderDiv.classList.add("order-card");
+      orderDiv.innerHTML = `
+        <div class="order-header">
+          <strong>Order Date:</strong> ${orderDate}<br>
+          <strong>Payment:</strong> ${payment}
+        </div>
+        <div>
+          <strong>Products:</strong>
+          <ul class="order-products">
+            ${orderProducts.map((p) => `<li>${p}</li>`).join("")}
+          </ul>
+        </div>
+      `;
+
+      ordersContainer.appendChild(orderDiv);
+    });
+  } catch (err) {
+    console.error("Error fetching orders:", err.response?.data || err);
+    ordersContainer.innerHTML = "<p>Failed to load orders.</p>";
+  }
+}
+
