@@ -175,7 +175,24 @@ placeOrderBtn.addEventListener("click", async () => {
     { headers: { Authorization: `Bearer ${idToken}` } }
   );
 
-  alert("Order placed successfully!");
+showPopup("✅ Order placed successfully!");
   cartModal.style.display = "none";
   fetchProducts(); // Refresh product list
 });
+function showPopup(message) {
+  // Create popup container if not already present
+  let popup = document.getElementById("customPopup");
+  if (!popup) {
+    popup = document.createElement("div");
+    popup.id = "customPopup";
+    document.body.appendChild(popup);
+  }
+
+  popup.textContent = message;
+  popup.classList.add("show");
+
+  // Hide popup after 3 seconds
+  setTimeout(() => {
+    popup.classList.remove("show");
+  }, 3000);
+}

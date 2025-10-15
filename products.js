@@ -73,6 +73,7 @@ async function fetchProducts() {
     );
 
     const products = res.data.documents || [];
+    
 
     products.forEach((productDoc) => {
       const fields = productDoc.fields || {};
@@ -242,8 +243,9 @@ async function addToCart(productId, productName, productPrice, selectedQty) {
 
     if (role !== "admin") {
     await renderCart(); 
+    fetchProducts();
 }
-    fetchProducts(); 
+   
   } catch (err) {
     console.error("Error adding to cart:", err.response?.data || err);
     alert("Failed to add product to cart.");
