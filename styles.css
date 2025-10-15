@@ -34,6 +34,29 @@ body {
   letter-spacing: 0.5px;
 }
 
+h2 {
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #ff6a00, #ee0979);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-top: 40px;
+  animation: fadeIn 2s ease-in-out, glow 2s infinite alternate;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 10px #ff6a00, 0 0 20px #ee0979; }
+  to { text-shadow: 0 0 20px #ff6a00, 0 0 30px #ee0979; }
+}
 
 .google-btn {
   display: flex;
@@ -74,7 +97,7 @@ body {
 
 
 #logoutBtn {
-  background: linear-gradient(135deg, #ff4d4f, #ff7875);
+  background: linear-gradient(135deg, #398d52, #ff7875);
   color: #fff;
   border: none;
   padding: 10px 18px;

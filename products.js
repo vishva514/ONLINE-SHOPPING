@@ -1,3 +1,4 @@
+
 const idToken = sessionStorage.getItem("idToken");
 const name = sessionStorage.getItem("displayName");
 const email = sessionStorage.getItem("email");
