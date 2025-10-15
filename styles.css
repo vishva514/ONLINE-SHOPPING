@@ -412,7 +412,7 @@ body {
 /* Popup container */
 #customPopup {
   position: fixed;
-  bottom: 40px;
+  top: 40px;
   right: 40px;
   background: linear-gradient(135deg, #4caf50, #2e7d32);
   color: white;
@@ -422,7 +422,7 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   opacity: 0;
   transform: translateY(20px);
-  transition: all 0.4s ease;
+  transition: all 0.7s ease;
   z-index: 9999;
   font-family: "Poppins", sans-serif;
   letter-spacing: 0.3px;
