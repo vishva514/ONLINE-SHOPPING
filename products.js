@@ -240,13 +240,85 @@ async function addToCart(productId, productName, productPrice, selectedQty) {
       { headers: { Authorization: `Bearer ${idToken}` } }
     );
 
-    alert("Added to cart");
+    if (role !== "admin") {
+    await renderCart(); 
+}
     fetchProducts(); 
   } catch (err) {
     console.error("Error adding to cart:", err.response?.data || err);
     alert("Failed to add product to cart.");
   }
 }
+async function renderCart() {
+  const cartItemsContainer = document.getElementById("cartItems");
+  const totalPriceElem = document.getElementById("totalPrice"); // Add this span in HTML for total
+  if (!cartItemsContainer || !totalPriceElem) return;
+
+  cartItemsContainer.innerHTML = "";
+  let total = 0;
+
+  try {
+    const safeUserId = email.replace(/\./g, "_").replace(/@/g, "_");
+    const userRes = await axios.get(
+      `https://firestore.googleapis.com/v1/projects/online-shop-dcd05/databases/(default)/documents/users/${safeUserId}`,
+      { headers: { Authorization: `Bearer ${idToken}` } }
+    );
+
+    let cartItems = userRes.data.fields.cart?.arrayValue?.values || [];
+
+    cartItems.forEach((item) => {
+      const fields = item.mapValue.fields;
+      const productId = fields.productId.stringValue;
+      const name = fields.name.stringValue;
+      const price = parseInt(fields.price.integerValue);
+      let quantity = parseInt(fields.quantity.integerValue);
+      const subtotal = price * quantity;
+      total += subtotal;
+
+      const itemDiv = document.createElement("div");
+      itemDiv.classList.add("cart-item");
+      itemDiv.innerHTML = `
+        <span>${name} (₹${price}) x ${quantity} = ₹${subtotal}</span>
+        <div>
+          <button class="minus">-</button>
+          <button class="plus">+</button>
+          <button class="remove">Remove</button>
+        </div>
+      `;
+
+      const minusBtn = itemDiv.querySelector(".minus");
+      const plusBtn = itemDiv.querySelector(".plus");
+      const removeBtn = itemDiv.querySelector(".remove");
+
+      minusBtn.addEventListener("click", async () => {
+        if (quantity > 1) {
+          quantity--;
+          await updateCartQuantity(productId, quantity);
+          renderCart();
+        }
+      });
+
+      plusBtn.addEventListener("click", async () => {
+        quantity++;
+        await updateCartQuantity(productId, quantity);
+        renderCart();
+      });
+
+      removeBtn.addEventListener("click", async () => {
+        await removeFromCart(productId);
+        renderCart();
+      });
+
+      cartItemsContainer.appendChild(itemDiv);
+    });
+
+    totalPriceElem.textContent = total;
+
+  } catch (err) {
+    console.error("Error fetching cart:", err);
+  }
+}
+
 
 const searchInput = document.getElementById("searchInput");
 searchInput.addEventListener("input", () => {

@@ -13,6 +13,7 @@
       <h2>Online Shop</h2>
     </div>
       <button id="logoutBtn">Logout</button>
+      <button id="cartBtn" style="margin-left: 15px;">Cart (<span id="cartCount">0</span>)</button>
     </div>
   </header>
   
@@ -36,13 +37,33 @@
 
   <h3>Available Products</h3>
 <div id="productsContainer"></div>
+<div id="cartModal" class="cart-modal">
+  <div class="cart-modal-content">
+    <span class="closeCart">&times;</span>
+    <h3>Your Cart</h3>
+    <div id="cartItems" class="cart-items"></div>
+
+    <div id="paymentSection" class="payment-section">
+      <div class="total-price">
+        <strong>Total: ₹<span id="totalPrice">0</span></strong>
+      </div>
+      <div class="payment-method">
+        <label for="paymentMethod">Select Payment Method:</label>
+        <select id="paymentMethod">
+          <option value="cash">Cash on Delivery</option>
+          <option value="credit_card">Credit/Debit Card</option>
+        </select>
+      </div>
+      <button id="placeOrderBtn" class="place-order-btn">Place Order</button>
+    </div>
+  </div>
+</div>
 
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
    <script src="Config.js"></script>
   <script src="authen.js"></script>
- <script src="products.js">
-
-</script>
+ <script src="products.js"></script>
+   <script src="cart.js"></script>
 
 </body>
 </html>
