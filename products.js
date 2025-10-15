@@ -37,6 +37,7 @@ if (role === "admin") {
     const description = document.getElementById("productDescription").value;
     const price = document.getElementById("productPrice").value;
     const quantity = document.getElementById("productQuantity").value;
+    const image = document.getElementById("productImage").value;
 
     try {
       await axios.post(
@@ -47,6 +48,7 @@ if (role === "admin") {
             description: { stringValue: description },
             price: { integerValue: parseInt(price) },
             quantity: { integerValue: parseInt(quantity) },
+            imageUrl: { stringValue: image } 
           },
         },
         { headers: { Authorization: `Bearer ${idToken}` } }
@@ -85,15 +87,20 @@ async function fetchProducts() {
         fields.price?.integerValue || fields.price?.doubleValue || "N/A";
       const productQty = fields.quantity?.integerValue || 0;
 
+
       const productBox = document.createElement("div");
       productBox.classList.add("product-box");
 
-      productBox.innerHTML = `
-        <h3>${productName}</h3>
-        <p>${productDescription}</p>
-        <p>Price: ₹${productPrice}</p>
-        <p>Available: ${productQty}</p>
-      `;
+     const productImage = fields.imageUrl?.stringValue || "https://via.placeholder.com/150";
+
+productBox.innerHTML = `
+  <img src="${productImage}" alt="${productName}" style="width:100%; border-radius:8px; margin-bottom:10px;" />
+  <h3>${productName}</h3>
+  <p>${productDescription}</p>
+  <p>Price: ₹${productPrice}</p>
+  <p>Available: ${productQty}</p>
+`;
+
 
       if (role === "admin") {
         const deleteBtn = document.createElement("button");
@@ -115,7 +122,7 @@ async function fetchProducts() {
         const editBtn = document.createElement("button");
         editBtn.textContent = "Edit";
         editBtn.addEventListener("click", () => {
-          openEditForm(productId, productName, productDescription, productPrice, productQty);
+          openEditForm(productId, productName, productDescription, productPrice, productQty, productImage);
         });
 
         productBox.appendChild(editBtn);
@@ -330,7 +337,7 @@ searchInput.addEventListener("input", () => {
     box.style.display = productName.includes(searchTerm) ? "block" : "none";
   });
 });
-function openEditForm(id, name, description, price, qty) {
+function openEditForm(id, name, description, price, qty, imageUrl) {
   const container = document.createElement("div");
   container.classList.add("edit-modal");
 
@@ -342,6 +349,7 @@ function openEditForm(id, name, description, price, qty) {
         <textarea id="editDescription" required>${description}</textarea><br><br>
         <input type="number" id="editPrice" value="${price}" required /><br><br>
         <input type="number" id="editQty" value="${qty}" required /><br><br>
+        <input type="text" id="editImage" value="${imageUrl}" placeholder="Image URL" required /><br><br>
         <button type="submit">Save Changes</button>
         <button type="button" id="cancelEdit">Cancel</button>
       </form>
@@ -360,16 +368,18 @@ function openEditForm(id, name, description, price, qty) {
     const updatedDesc = document.getElementById("editDescription").value;
     const updatedPrice = document.getElementById("editPrice").value;
     const updatedQty = document.getElementById("editQty").value;
+    const updatedImage = document.getElementById("editImage").value;
 
     try {
       await axios.patch(
-        `https://firestore.googleapis.com/v1/projects/online-shop-dcd05/databases/(default)/documents/shoppingProducts/${id}?updateMask.fieldPaths=name&updateMask.fieldPaths=description&updateMask.fieldPaths=price&updateMask.fieldPaths=quantity`,
+        `https://firestore.googleapis.com/v1/projects/online-shop-dcd05/databases/(default)/documents/shoppingProducts/${id}?updateMask.fieldPaths=name&updateMask.fieldPaths=description&updateMask.fieldPaths=price&updateMask.fieldPaths=quantity&updateMask.fieldPaths=imageUrl`,
         {
           fields: {
             name: { stringValue: updatedName },
             description: { stringValue: updatedDesc },
             price: { integerValue: parseInt(updatedPrice) },
             quantity: { integerValue: parseInt(updatedQty) },
+            imageUrl: { stringValue: updatedImage }
           },
         },
         { headers: { Authorization: `Bearer ${idToken}` } }
@@ -383,4 +393,5 @@ function openEditForm(id, name, description, price, qty) {
     }
   });
 }
+
 fetchProducts();

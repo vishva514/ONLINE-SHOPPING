@@ -74,7 +74,7 @@ async function renderCart() {
       const itemDiv = document.createElement("div");
       itemDiv.classList.add("cart-item");
       itemDiv.innerHTML = `
-        <span>${name} (₹${price}) x ${quantity} = ₹<span class="itemSubtotal">${subtotal}</span></span>
+        <span>${name} (₹${price}) = ₹<span class="itemSubtotal">${subtotal}</span></span>
         <div>
           <button class="minus">-</button>
           <button class="plus">+</button>
