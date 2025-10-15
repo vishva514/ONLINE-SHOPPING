@@ -286,7 +286,62 @@ body {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
-/* Cart Modal Styles */
+/* ==================== Cart & Orders Button ==================== */
+#cartBtn,
+#viewOrdersBtn {
+  position: fixed;
+  bottom: 30px;
+  padding: 16px 26px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  z-index: 1000;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Separate positions */
+#cartBtn { right: 150px; background: linear-gradient(135deg, #1abc9c, #16a085); }
+#viewOrdersBtn { right: 30px; background: linear-gradient(135deg, #e67e22, #d35400); }
+
+/* Hover Effects */
+#cartBtn:hover, #viewOrdersBtn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  filter: brightness(1.1);
+}
+
+/* ==================== Popup ==================== */
+#customPopup {
+  position: fixed;
+  top: 40px;
+  right: 40px;
+  background: linear-gradient(135deg, #8e44ad, #9b59b6);
+  color: #fff;
+  font-weight: 600;
+  padding: 18px 28px;
+  border-radius: 14px;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.35);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+  z-index: 9999;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.3px;
+}
+
+/* Popup Show */
+#customPopup.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==================== Cart Modal ==================== */
 .cart-modal {
   display: none;
   position: fixed;
@@ -296,30 +351,39 @@ body {
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  background-color: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.75);
 }
 
 .cart-modal-content {
-  background-color: #fff;
-  margin: 60px auto;
-  padding: 20px;
-  border-radius: 10px;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  margin: 80px auto;
+  padding: 25px;
+  border-radius: 20px;
   width: 90%;
-  max-width: 500px;
+  max-width: 520px;
   position: relative;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 10px 35px rgba(0,0,0,0.3);
+  border-top: 6px solid #1abc9c;
+  animation: modalPop 0.4s ease-out;
+}
+
+@keyframes modalPop {
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 .closeCart {
-  color: #333;
+  color: #555;
   float: right;
   font-size: 28px;
   font-weight: bold;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .closeCart:hover {
-  color: #ff4d4f;
+  color: #e74c3c;
+  transform: scale(1.2);
 }
 
 .cart-items {
@@ -333,107 +397,87 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+  padding: 12px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f9f9f9, #e0e0e0);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cart-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
 }
 
 .cart-item button {
-  margin: 0 2px;
-  padding: 4px 8px;
+  margin: 0 4px;
+  padding: 6px 12px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  background-color: #398d52;
+  background: linear-gradient(135deg, #1abc9c, #16a085);
   color: #fff;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
 .cart-item button:hover {
-  background-color: #2f6b40;
+  transform: scale(1.1);
+  background: linear-gradient(135deg, #16a085, #1abc9c);
 }
 
 .payment-section {
-  margin-top: 15px;
-  padding-top: 10px;
+  margin-top: 20px;
+  padding-top: 15px;
   border-top: 1px solid #ccc;
 }
 
 .total-price {
-  font-size: 18px;
-  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #2c3e50;
 }
 
 .payment-method label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #34495e;
 }
 
 .payment-method select {
   width: 100%;
-  padding: 8px;
-  border-radius: 6px;
+  padding: 10px;
+  border-radius: 10px;
   border: 1px solid #ccc;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+}
+
+.payment-method select:focus {
+  border-color: #1abc9c;
+  box-shadow: 0 0 10px rgba(26,188,156,0.3);
 }
 
 .place-order-btn {
   width: 100%;
-  padding: 10px;
-  background: linear-gradient(135deg, #398d52, #ff7875);
+  padding: 14px;
+  background: linear-gradient(135deg, #1abc9c, #16a085);
   border: none;
   color: #fff;
-  font-weight: 500;
-  border-radius: 8px;
+  font-weight: 600;
+  border-radius: 12px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
 }
 
 .place-order-btn:hover {
-  background: linear-gradient(135deg, #d9363e, #f5222d);
+  background: linear-gradient(135deg, #16a085, #1abc9c);
+  transform: scale(1.03);
 }
 
-/* Cart Button */
-.cart-button {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background: linear-gradient(135deg, #398d52, #ff7875);
-  color: #fff;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 50px;
-  font-weight: 500;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  z-index: 1000;
-}
-
-.cart-button:hover {
-  background: linear-gradient(135deg, #d9363e, #f5222d);
-}
-/* Popup container */
-#customPopup {
-  position: fixed;
-  top: 40px;
-  right: 40px;
-  background: linear-gradient(135deg, #4caf50, #2e7d32);
-  color: white;
-  font-weight: 500;
-  padding: 16px 24px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.7s ease;
-  z-index: 9999;
-  font-family: "Poppins", sans-serif;
-  letter-spacing: 0.3px;
-}
-
-/* When popup is visible */
-#customPopup.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-/* Orders modal styling */
+/* ==================== Orders Modal ==================== */
 .orders-modal {
   display: none;
   position: fixed;
@@ -443,30 +487,25 @@ body {
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0,0,0,0.7);
   padding-top: 60px;
 }
 
 .orders-modal-content {
-  background-color: #fff;
+  background: linear-gradient(145deg, #ffffff, #f4f4f4);
   margin: auto;
-  padding: 20px;
-  border-radius: 12px;
+  padding: 25px;
+  border-radius: 18px;
   width: 85%;
-  max-width: 700px;
-  animation: slideDown 0.3s ease;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  max-width: 720px;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+  animation: slideDown 0.4s ease;
+  border-top: 6px solid #e67e22;
 }
 
 @keyframes slideDown {
-  from {
-    transform: translateY(-20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 .closeOrders {
@@ -475,39 +514,44 @@ body {
   font-weight: bold;
   cursor: pointer;
   color: #555;
+  transition: all 0.2s ease;
 }
 
 .closeOrders:hover {
-  color: #000;
+  color: #e67e22;
+  transform: scale(1.2);
 }
 
-/* Each order card */
+/* Each Order Card */
 .order-card {
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  margin: 15px 0;
-  padding: 15px;
-  background: #fafafa;
-  transition: transform 0.2s ease;
+  border-radius: 14px;
+  margin: 18px 0;
+  padding: 18px;
+  background: linear-gradient(135deg, #fefefe, #f0f0f0);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .order-card:hover {
   transform: scale(1.02);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
 .order-header {
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #2c3e50;
+  margin-bottom: 10px;
 }
 
 .order-products {
-  margin-top: 10px;
+  margin-top: 12px;
   padding-left: 20px;
 }
 
 .order-products li {
   list-style: disc;
-  margin-bottom: 4px;
-  color: #444;
+  margin-bottom: 6px;
+  color: #34495e;
+  font-weight: 500;
 }
